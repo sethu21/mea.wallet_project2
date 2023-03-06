@@ -1,5 +1,6 @@
 package com.example.mea.wallet.Dto.Converter.Repository.Service;
 
+
 import com.example.mea.wallet.Dto.Converter.Repository.TeacherRepository;
 import com.example.mea.wallet.Dto.Converter.TeacherDtoConverter;
 import com.example.mea.wallet.Dto.TeacherDto;
@@ -8,25 +9,31 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
+@Component
 public class TeacherService {
     private final TeacherRepository teacherRepository;
+
     private final TeacherDtoConverter teacherDtoConverter;
     private final SessionFactory sessionFactory;
-
     @Autowired
-    public TeacherService(TeacherRepository teacherRepository, TeacherDtoConverter teacherDtoConverter,
+    public TeacherService(TeacherRepository teacherRepository,
+                          TeacherDtoConverter teacherDtoConverter,
                           SessionFactory sessionFactory) {
         this.teacherRepository = teacherRepository;
         this.teacherDtoConverter = teacherDtoConverter;
         this.sessionFactory = sessionFactory;
     }
-
     public TeacherDto addTeacher(TeacherDto teacherDTO) {
         // Convert the DTO to a Teacher object
         Teacher teacher = teacherDtoConverter.convertToTeacher(teacherDTO);
@@ -37,7 +44,7 @@ public class TeacherService {
 
         // Convert the saved Teacher object to a DTO and return it
         Teacher savedTeacher = teacherRepository.findById(teacher.getId());
-        return teacherDtoConverter.ConvertToDto(savedTeacher);
+        return teacherDtoConverter.convertToDto(savedTeacher);
     }
 
     public TeacherDto getTeacherById(String id) {
@@ -47,7 +54,7 @@ public class TeacherService {
 
         if (teacher != null) {
             // Convert the retrieved Teacher object to a DTO and return it
-            return teacherDtoConverter.ConvertToDto(teacher);
+            return teacherDtoConverter.convertToDto(teacher);
         } else {
             // Return null if the Teacher object was not found
             return null;
@@ -63,7 +70,7 @@ public class TeacherService {
 
         // Convert each Teacher object to a DTO and add it to the list
         for (Teacher teacher : teachers) {
-            teacherDTOs.add(teacherDtoConverter.ConvertToDto(teacher));
+            teacherDTOs.add(teacherDtoConverter.convertToDto(teacher));
         }
 
         return teacherDTOs;

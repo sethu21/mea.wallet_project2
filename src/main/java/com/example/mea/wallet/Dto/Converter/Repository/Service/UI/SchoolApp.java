@@ -1,39 +1,44 @@
-package com.example.mea.wallet;
+package com.example.mea.wallet.Dto.Converter.Repository.Service.UI;
 
-import com.example.mea.wallet.Dto.Converter.Repository.Service.TeacherService;
-import com.example.mea.wallet.Dto.Converter.Repository.StudentRepository;
-import org.hibernate.SessionFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-public  class SchoolApp {
+
+
+@SpringBootApplication
+@EnableJpaRepositories
+@ComponentScan(basePackages = "com.example.mea.wallet.Dto.Converter")
+public class SchoolApp implements CommandLineRunner {
 
     private final StudentApp studentApp;
     private final TeacherApp teacherApp;
+
 
     public SchoolApp(StudentApp studentApp, TeacherApp teacherApp) {
         this.studentApp = studentApp;
         this.teacherApp = teacherApp;
     }
 
+
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext context =
-                new AnnotationConfigApplicationContext(HibernateUtil.class);
-        SessionFactory sessionFactory = context.getBean(SessionFactory.class);
+        SpringApplication.run(SchoolApp.class, args);
 
-        StudentRepository studentRepository = context.getBean(StudentRepository.class);
-        StudentApp studentApp = new StudentApp(sessionFactory,studentRepository);
-        TeacherService teacherService = context.getBean(TeacherService.class);
-        TeacherApp teacherApp = new TeacherApp(teacherService);
 
-        SchoolApp schoolApp = new SchoolApp(studentApp, teacherApp);
-        schoolApp.run();
-
-        context.close();
     }
 
-    public void run() {
+
+    @Override
+    public void run(String... args) throws Exception {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -57,6 +62,6 @@ public  class SchoolApp {
             }
         }
     }
+
+
 }
-
-

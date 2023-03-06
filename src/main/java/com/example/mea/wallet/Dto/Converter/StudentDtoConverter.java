@@ -4,10 +4,11 @@ import com.example.mea.wallet.Dto.StudentsDto;
 import com.example.mea.wallet.Entity.Students;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 @NoArgsConstructor
 public class StudentDtoConverter {
     private static int nextId = 1;

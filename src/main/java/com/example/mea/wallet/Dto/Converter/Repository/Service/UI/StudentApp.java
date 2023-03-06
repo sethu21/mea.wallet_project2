@@ -1,4 +1,4 @@
-package com.example.mea.wallet;
+package com.example.mea.wallet.Dto.Converter.Repository.Service.UI;
 
 import com.example.mea.wallet.Action.*;
 import com.example.mea.wallet.Dto.Converter.Repository.Service.StudentService;
@@ -6,11 +6,14 @@ import com.example.mea.wallet.Dto.Converter.Repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Scanner;
 
 @AllArgsConstructor
 @Component
+@ComponentScan("com.example.mea.wallet.Dto.Converter.Repository")
+
 public class StudentApp {
     private final SessionFactory sessionFactory;
     private final StudentRepository studentRepository;
@@ -57,4 +60,3 @@ public class StudentApp {
         }
     }
 }
-
